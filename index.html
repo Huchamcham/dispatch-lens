@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#20283b">
+  <title>Dispatch Lens · Delivery performance</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="delivery-data.js" defer></script>
+  <script src="sample-data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header><div class="header-inner"><span class="mark" aria-hidden="true">↗</span><strong>Dispatch Lens</strong></div></header>
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <div><p class="source" id="source-name">Demo dataset</p><h1 id="page-title">Delivery performance</h1><p>Review on-time delivery rates by region and check your CSV for errors.</p></div>
+      <div class="upload-actions">
+        <button class="secondary" id="sample-button" type="button">Load demo</button>
+        <label class="upload">Import CSV<input id="csv-file" type="file" accept=".csv,text/csv" aria-label="Import CSV"></label>
+      </div>
+    </section>
+    <p id="message" class="message" role="status"></p>
+    <section class="toolbar" aria-label="Report filters">
+      <label>Region<select id="region"><option value="">All regions</option></select></label>
+    </section>
+    <section class="metrics" aria-label="Delivery metrics">
+      <div class="metric feature"><span>On-time rate</span><strong id="rate">—</strong><small id="rate-detail">Delivered shipments</small></div>
+      <div class="metric"><span>Shipments</span><strong id="total">—</strong><small>Valid records in view</small></div>
+      <div class="metric"><span>Late deliveries</span><strong id="late">—</strong><small>Delivered after promise date</small></div>
+      <div class="metric"><span>Open shipments</span><strong id="open">—</strong><small>No delivery date recorded</small></div>
+    </section>
+    <div class="detail-grid">
+      <section class="panel"><h2>On-time rate by region</h2><p>Based on completed deliveries in the current view.</p><div class="chart" id="chart"></div></section>
+      <section class="panel quality"><h2>Import quality</h2><p id="quality-summary"></p><details id="quality-details"><summary>Review excluded records</summary><ul id="issues"></ul></details><details><summary>CSV format</summary><p>Required columns: <code>shipment_id</code>, <code>region</code>, <code>dispatched_on</code>, <code>promised_on</code>, and <code>delivered_on</code>. Use YYYY-MM-DD dates and leave the delivery date blank for open shipments.</p><button class="secondary" id="download-sample" type="button">Download demo CSV ↓</button></details></section>
+    </div>
+    <section class="panel table-panel" aria-labelledby="shipment-title">
+      <div class="table-heading"><div><h2 id="shipment-title">Shipments</h2><p id="rows-label" aria-live="polite"></p></div><div class="table-actions"><select id="status" aria-label="Shipment status"><option value="">All statuses</option><option value="onTime">On time</option><option value="late">Late</option><option value="open">Open</option></select><button id="download" class="secondary" type="button">Export filtered CSV ↓</button></div></div>
+      <div class="table-scroll" role="region" aria-label="Shipments table" tabindex="0">
+        <table><thead><tr><th scope="col">Shipment</th><th scope="col">Region</th><th scope="col">Dispatched</th><th scope="col">Promised</th><th scope="col">Delivered</th><th scope="col">Status</th></tr></thead><tbody id="rows"></tbody></table>
+      </div>
+      <div class="pagination"><button class="secondary" id="previous" type="button">Previous</button><button class="secondary" id="next" type="button">Next</button></div>
+    </section>
+  </main>
+</body>
+</html>
